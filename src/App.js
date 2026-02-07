@@ -1,6 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import EmployeeForm from './components/employeeForm'; // ADD THIS LINE
+import EmployeeForm from './components/employeeForm';
+import EmployeeList from './components/employeeList';
+import EmployeeDetail from './components/employeeDetail';
 
 function App() {
   return (
@@ -22,14 +24,11 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             
-            <Route path="/employees" element={
-              <div className="page-container">
-                <h2>Employee Management</h2>
-                <p>View, add, and manage employees here.</p>
-              </div>
-            } />
+            <Route path="/employeeList" element={<EmployeeList />} />
 
             <Route path="/employeeForm" element={<EmployeeForm />} />
+
+            <Route path="/employeeDetail/:id" element={<EmployeeDetail />} />
             
             <Route path="/departments" element={
               <div className="page-container">
@@ -74,7 +73,7 @@ function HomePage() {
             <ul className="employee-management-list">
               <li><Link to="/employeeForm">Add</Link></li>
               <li><Link to="/employee-edit">Edit</Link></li>
-              <li><Link to="/employee-roster">View</Link></li>
+              <li><Link to="/employeeList">View</Link></li>
             </ul>
           <Link to="/employees" className="card-button">Manage Employees</Link>
         </div>

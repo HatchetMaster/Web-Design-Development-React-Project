@@ -23,21 +23,20 @@
 }
 
 .employee-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.form-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+    width: 100%;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
 }
 
 .form-group label {
@@ -75,6 +74,7 @@
 }
 
 .form-actions {
+    grid-column: 1 / -1;
     display: flex;
     gap: 1rem;
     justify-content: center;
@@ -114,14 +114,14 @@
     background-color: #d0d0d0;
 }
 
+/* Responsive: Switch to single column on mobile */
 @media (max-width: 768px) {
     .employee-form-container {
         padding: 1rem;
     }
 
-    .form-row {
+    .employee-form {
         grid-template-columns: 1fr;
-        gap: 1rem;
     }
 
     .form-actions {
