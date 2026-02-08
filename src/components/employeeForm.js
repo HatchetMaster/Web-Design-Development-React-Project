@@ -7,12 +7,12 @@ function EmployeeForm() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
+    ssn: '',
     phone: '',
     address: '',
     city: '',
     state: '',
     zipCode: '',
-    ssn: '',
     email: '',
     payRate: '',
     position: '',
@@ -40,12 +40,12 @@ function EmployeeForm() {
       setFormData({
         firstName: '',
         lastName: '',
+        ssn: '',
         phone: '',
         address: '',
         city: '',
         state: '',
         zipCode: '',
-        ssn: '',
         email: '',
         payRate: '',
         position: '',
@@ -89,14 +89,15 @@ function EmployeeForm() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="example@example.com"
+         <label htmlFor="ssn">SSN *</label>
+         <input
+           type="password"
+           id="ssn"
+           name="ssn"
+           value={formData.ssn}
+           onChange={handleChange}
+           placeholder="XXX-XX-XXXX"
+           required
           />
         </div>
 
@@ -113,6 +114,18 @@ function EmployeeForm() {
         </div>
 
         <div className="form-group full-width">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="example@example.com"
+          />
+        </div>
+        
+        <div className="form-group">
           <label htmlFor="address">Street Address *</label>
           <input
             type="text"
@@ -216,20 +229,7 @@ function EmployeeForm() {
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="ssn">SSN *</label>
-          <input
-            type="text"
-            id="ssn"
-            name="ssn"
-            value={formData.ssn}
-            onChange={handleChange}
-            placeholder="XXX-XX-XXXX"
-            required
-          />
-        </div>
-
-        <div className="form-group">
+        <div className="form-group full-width">
           <label htmlFor="payRate">Pay Rate *</label>
           <input
             type="number"

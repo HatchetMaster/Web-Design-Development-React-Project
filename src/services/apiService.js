@@ -2,7 +2,7 @@ import { API_BASE_URL } from '../config';
 
 // Placeholders for actual API calls - will be replaced when the backend is ready
 export const getEmployees = async () => {
-    const response = await fetch('{API_BASE_URL}/employees');
+    const response = await fetch('${API_BASE_URL}/employees');
     return response.json();
 };
 
