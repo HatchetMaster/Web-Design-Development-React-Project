@@ -1,6 +1,6 @@
 import { USE_BACKEND } from '../config';
-import * as localStorageService from './localStorageService';
-import * as apiService from './apiService';
+import * as localStorageService from './LocalStorageService';
+import * as apiService from './ApiService';
 
 const getService = () => USE_BACKEND ? apiService : localStorageService;
 

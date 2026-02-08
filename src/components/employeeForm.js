@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { createEmployee } from '../services/employeeService';
-import './employeeForm.css';
+import { createEmployee } from '../services/EmployeeService';
+import './EmployeeForm.css';
 
 function EmployeeForm() {
   // State for each form field

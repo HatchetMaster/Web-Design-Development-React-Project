@@ -1,8 +1,8 @@
 ﻿import { useState, useEffect } from 'react';
-import { getEmployees, deleteEmployee } from '../services/employeeService';
-import { seedEmployees, clearEmployees } from '../services/seedData';
+import { getEmployees, deleteEmployee } from '../services/EmployeeService';
+import { seedEmployees, clearEmployees } from '../services/SeedData';
 import { Link } from 'react-router-dom';
-import './employeeList.css';
+import './EmployeeList.css';
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);

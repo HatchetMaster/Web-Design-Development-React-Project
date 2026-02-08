@@ -1,4 +1,4 @@
-import * as localStorageService from './localStorageService';
+import * as localStorageService from './LocalStorageService';
 
 // Mock localStorage
 const localStorageMock = (() => {

@@ -1,7 +1,7 @@
 ﻿import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { getEmployee, updateEmployee, deleteEmployee } from '../services/employeeService';
-import './employeeDetail.css';
+import { getEmployee, updateEmployee, deleteEmployee } from '../services/EmployeeService';
+import './EmployeeDetail.css';
 
 function EmployeeDetail() {
   const { id } = useParams();

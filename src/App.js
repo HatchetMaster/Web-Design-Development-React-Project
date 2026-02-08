@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import EmployeeForm from './components/employeeForm';
-import EmployeeList from './components/employeeList';
-import EmployeeDetail from './components/employeeDetail';
+import EmployeeForm from './components/EmployeeForm';
+import EmployeeList from './components/EmployeeList';
+import EmployeeDetail from './components/EmployeeDetail';
 
 function App() {
   return (
@@ -24,11 +24,11 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             
-            <Route path="/employeeList" element={<EmployeeList />} />
+            <Route path="/EmployeeList" element={<EmployeeList />} />
 
-            <Route path="/employeeForm" element={<EmployeeForm />} />
+            <Route path="/EmployeeForm" element={<EmployeeForm />} />
 
-            <Route path="/employeeDetail/:id" element={<EmployeeDetail />} />
+            <Route path="/EmployeeDetail/:id" element={<EmployeeDetail />} />
             
             <Route path="/departments" element={
               <div className="page-container">
