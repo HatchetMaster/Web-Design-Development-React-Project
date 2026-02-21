@@ -1,8 +1,8 @@
 import { USE_BACKEND } from '../config';
-import * as localStorageService from './LocalStorageService';
-import * as apiService from './ApiService';
+import * as LocalStorageService from './LocalStorageService';
+import * as ApiService from './ApiService';
 
-const getService = () => USE_BACKEND ? apiService : localStorageService;
+const getService = () => USE_BACKEND ? ApiService : LocalStorageService;
 
 export const getEmployees = () => getService().getEmployees();
 export const getEmployee = (id) => getService().getEmployee(id);

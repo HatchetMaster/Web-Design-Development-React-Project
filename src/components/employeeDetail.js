@@ -7,7 +7,7 @@ function EmployeeDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [isEditing, setIsEditing] = useState(searchParams.get('edit') === 'true'); // Check URL param
+  const [isEditing, setIsEditing] = useState(searchParams.get('edit') === 'true');
   const [employee, setEmployee] = useState(null);
   const [formData, setFormData] = useState(null);
 
@@ -39,7 +39,7 @@ function EmployeeDetail() {
   };
 
   const handleCancel = () => {
-    setFormData(employee); // Reset to original data
+    setFormData(employee);
     setIsEditing(false);
   };
 
@@ -74,7 +74,7 @@ function EmployeeDetail() {
   return (
     <div className="employee-detail-container">
       <div className="detail-header">
-        <Link to="/employees" className="back-link">← Back to Employee List</Link>
+        <Link to="/EmployeeList" className="back-link">← Back to Employee List</Link>
         <h2>{employee.firstName} {employee.lastName}</h2>
         {!isEditing && (
           <div className="header-actions">
@@ -100,7 +100,7 @@ function EmployeeDetail() {
                   type="text"
                   id="firstName"
                   name="firstName"
-                  value={formData.firstName}
+                  value={formData.firstName || ''}
                   onChange={handleChange}
                   required
                 />
@@ -112,7 +112,7 @@ function EmployeeDetail() {
                   type="text"
                   id="lastName"
                   name="lastName"
-                  value={formData.lastName}
+                  value={formData.lastName || ''}
                   onChange={handleChange}
                   required
                 />
@@ -124,7 +124,7 @@ function EmployeeDetail() {
                   type="email"
                   id="email"
                   name="email"
-                  value={formData.email}
+                  value={formData.email || ''}
                   onChange={handleChange}
                 />
               </div>
@@ -135,19 +135,21 @@ function EmployeeDetail() {
                   type="tel"
                   id="phone"
                   name="phone"
-                  value={formData.phone}
+                  value={formData.phone || ''}
                   onChange={handleChange}
+                  placeholder="555-555-5555"
                 />
               </div>
 
               <div className="form-group">
                 <label htmlFor="ssn">SSN *</label>
                 <input
-                  type="text"
+                  type="password"
                   id="ssn"
                   name="ssn"
-                  value={formData.ssn}
+                  value={formData.ssn || ''}
                   onChange={handleChange}
+                  placeholder="XXX-XX-XXXX"
                   required
                 />
               </div>
@@ -163,7 +165,7 @@ function EmployeeDetail() {
                   type="text"
                   id="address"
                   name="address"
-                  value={formData.address}
+                  value={formData.address || ''}
                   onChange={handleChange}
                   required
                 />
@@ -175,7 +177,7 @@ function EmployeeDetail() {
                   type="text"
                   id="city"
                   name="city"
-                  value={formData.city}
+                  value={formData.city || ''}
                   onChange={handleChange}
                   required
                 />
@@ -186,10 +188,11 @@ function EmployeeDetail() {
                 <select
                   id="state"
                   name="state"
-                  value={formData.state}
+                  value={formData.state || ''}
                   onChange={handleChange}
                   required
                 >
+                  <option value="">Select State</option>
                   <option value="AL">Alabama</option>
                   <option value="AK">Alaska</option>
                   <option value="AZ">Arizona</option>
@@ -249,7 +252,7 @@ function EmployeeDetail() {
                   type="text"
                   id="zipCode"
                   name="zipCode"
-                  value={formData.zipCode}
+                  value={formData.zipCode || ''}
                   onChange={handleChange}
                   pattern="[0-9]{5}"
                   maxLength="5"
@@ -268,7 +271,7 @@ function EmployeeDetail() {
                   type="text"
                   id="position"
                   name="position"
-                  value={formData.position}
+                  value={formData.position || ''}
                   onChange={handleChange}
                   required
                 />
@@ -279,10 +282,11 @@ function EmployeeDetail() {
                 <select
                   id="department"
                   name="department"
-                  value={formData.department}
+                  value={formData.department || ''}
                   onChange={handleChange}
                   required
                 >
+                  <option value="">Select Department</option>
                   <option value="Sales">Sales</option>
                   <option value="Marketing">Marketing</option>
                   <option value="HR">HR</option>
@@ -297,7 +301,7 @@ function EmployeeDetail() {
                   type="number"
                   id="payRate"
                   name="payRate"
-                  value={formData.payRate}
+                  value={formData.payRate || ''}
                   onChange={handleChange}
                   step="0.01"
                   min="0"
@@ -309,10 +313,10 @@ function EmployeeDetail() {
 
           <div className="form-actions">
             <button type="submit" className="btn-save">
-              Save Changes
+              💾 Save Changes
             </button>
             <button type="button" onClick={handleCancel} className="btn-cancel">
-              Cancel
+              ✖ Cancel
             </button>
           </div>
         </form>
@@ -336,7 +340,7 @@ function EmployeeDetail() {
               </div>
               <div className="detail-item">
                 <span className="detail-label">SSN:</span>
-                <span className="detail-value">{employee.ssn}</span>
+                <span className="detail-value">***-**-{employee.ssn?.slice(-4) || '****'}</span>
               </div>
             </div>
           </div>
@@ -344,7 +348,7 @@ function EmployeeDetail() {
           <div className="detail-section">
             <h3>Address</h3>
             <div className="detail-grid">
-              <div className="detail-item full-width">
+              <div className="detail-item">
                 <span className="detail-label">Street:</span>
                 <span className="detail-value">{employee.address}</span>
               </div>

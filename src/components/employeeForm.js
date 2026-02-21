@@ -279,7 +279,7 @@ function EmployeeForm() {
           <button type="submit" className="btn-primary">
             Add Employee
           </button>
-          <button type="button" className="btn-secondary" onClick={() => window.history.back()}>
+          <button type="button" className="btn-cancel" onClick={() => window.history.back()}>
             Cancel
           </button>
         </div>

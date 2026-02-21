@@ -1,4 +1,14 @@
 const STORAGE_KEY = 'employees';
+
+// ID generation, ensures uniqueness
+let idCounter = 0;
+const generateUniqueId = () => {
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).substring(2, 9);
+  idCounter = (idCounter + 1) % 1000;
+  return `${timestamp}-${random}-${idCounter}`;
+};
+
 // Get all employees from local storage
 export const getEmployees = () => {
     const data = localStorage.getItem(STORAGE_KEY);
@@ -16,15 +26,15 @@ export const createEmployee = (employee) => {
     const employees = getEmployees();
     const newEmployee = {
       ...employee,
-      id: Date.now().toString(), // Simple IS generation
+      id: generateUniqueId(), // Changed from Date.now().toString()
       createdAt: new Date().toISOString()
     };
-      employees.push(newEmployee);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
-      return newEmployee;
+    employees.push(newEmployee);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(employees));
+    return newEmployee;
 };
 
-//Update an existing employee
+// Update an existing employee
 export const updateEmployee = (updateEmployee) => {
     const employees = getEmployees();
     const index = employees.findIndex(emp => emp.id === updateEmployee.id);

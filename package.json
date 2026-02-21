@@ -1,42 +1,31 @@
 {
-  "name": "class-project",
-  "version": "0.1.0",
+  "name": "employee-management-system",
+  "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "react-router-dom": "^7.13.0",
-    "react-scripts": "^5.0.1",
-    "web-vitals": "^2.1.4"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "npm run test:frontend && npm run test:backend",
+    "test:frontend": "react-scripts test --watchAll=false",
+    "test:backend": "cd backend && npm test",
+    "test:all": "npm run test:frontend -- --coverage && npm run test:backend",
+    "docker:up": "cd backend && docker-compose up -d",
+    "docker:down": "cd backend && docker-compose down",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "cors": "^2.8.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0",
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2"
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.1",
+    "babel-jest": "^30.2.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-environment-jsdom": "^29.7.0"
   }
 }

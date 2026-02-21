@@ -1,5 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { getEmployees } from './services/EmployeeService';
 import EmployeeForm from './components/EmployeeForm';
 import EmployeeList from './components/EmployeeList';
 import EmployeeDetail from './components/EmployeeDetail';
@@ -14,7 +16,7 @@ function App() {
           </div>
           <nav className="navbar-links">
             <Link to="/">Dashboard</Link>
-            <Link to="/employees">Employees</Link>
+            <Link to="/EmployeeList">Employees</Link>
             <Link to="/departments">Departments</Link>
             <Link to="/reports">Reports</Link>
           </nav>
@@ -28,7 +30,7 @@ function App() {
 
             <Route path="/EmployeeForm" element={<EmployeeForm />} />
 
-            <Route path="/EmployeeDetail/:id" element={<EmployeeDetail />} />
+            <Route path="/employee/:id" element={<EmployeeDetail />} />
             
             <Route path="/departments" element={
               <div className="page-container">
@@ -51,6 +53,30 @@ function App() {
 }
 
 function HomePage() {
+  const [stats, setStats] = useState({
+    totalEmployees: 0,
+    departments: 0,
+    activeProjects: 0
+  });
+
+  useEffect(() => {
+    loadStats();
+  }, []);
+
+  const loadStats = () => {
+    const employees = getEmployees();
+    const totalEmployees = employees.length;
+    const uniqueDepartments = new Set(employees.map(emp => emp.department));
+    const departments = uniqueDepartments.size;
+    const activeProjects = 0;
+
+    setStats({
+      totalEmployees,
+      departments,
+      activeProjects
+    });
+  };
+
   return (
     <div className="dashboard">
       <div className="welcome-banner">
@@ -61,9 +87,9 @@ function HomePage() {
        <div className="banner-content">
          <h3>Quick Stats</h3>
          <ul className="stats-list">
-           <li>Total Employees: </li>
-           <li>Departments: </li>
-           <li>Active Projects: </li>
+           <li>Total Employees: <strong>{stats.totalEmployees}</strong></li>
+           <li>Departments: <strong>{stats.departments}</strong></li>
+           <li>Active Projects: <strong>{stats.activeProjects}</strong></li>
          </ul>
        </div>
       </div> 
@@ -71,11 +97,11 @@ function HomePage() {
         <div className="card">
           <h3>Employee Information</h3>
             <ul className="employee-management-list">
-              <li><Link to="/employeeForm">Add</Link></li>
+              <li><Link to="/EmployeeForm">Add</Link></li>
               <li><Link to="/employee-edit">Edit</Link></li>
-              <li><Link to="/employeeList">View</Link></li>
+              <li><Link to="/EmployeeList">View</Link></li>
             </ul>
-          <Link to="/employees" className="card-button">Manage Employees</Link>
+          <Link to="/EmployeeList" className="card-button">Manage Employees</Link>
         </div>
         
         <div className="card">

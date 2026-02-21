@@ -101,23 +101,54 @@ const generatePayRate = (department) => {
   return (randomNumber(min * 100, max * 100) / 100).toFixed(2);
 };
 
-const generateEmail = (firstName, lastName) => {
+const generateEmail = (firstName, lastName, existingEmails) => {
   const domains = ['company.com', 'business.com', 'corp.com', 'enterprise.com'];
-  return `${firstName.toLowerCase()}.${lastName.toLowerCase()}@${randomItem(domains)}`;
+  let email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}@${randomItem(domains)}`;
+  
+  // If email exists, add a number suffix
+  let counter = 1;
+  while (existingEmails.has(email)) {
+    email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${counter}@${randomItem(domains)}`;
+    counter++;
+  }
+  
+  return email;
 };
 
-const generateEmployee = () => {
-  const firstName = randomItem(firstNames);
-  const lastName = randomItem(lastNames);
+const generateEmployee = (usedCombinations, existingEmails) => {
+  let firstName, lastName, combinationKey;
+  let attempts = 0;
+  const maxAttempts = 1000;
+
+  // Keep trying until we get a unique name combination
+  do {
+    firstName = randomItem(firstNames);
+    lastName = randomItem(lastNames);
+    combinationKey = `${firstName}-${lastName}`;
+    attempts++;
+    
+    // If we've tried too many times, we've likely exhausted combinations
+    if (attempts > maxAttempts) {
+      throw new Error('Unable to generate unique employee combination. Consider adding more names to the pool.');
+    }
+  } while (usedCombinations.has(combinationKey));
+
+  // Mark this combination as used
+  usedCombinations.add(combinationKey);
+
   const department = randomItem(departments);
   const streetNumber = randomNumber(100, 9999);
   const street = randomItem(streets);
   const streetType = randomItem(streetTypes);
+  const email = generateEmail(firstName, lastName, existingEmails);
+  
+  // Mark this email as used
+  existingEmails.add(email);
 
   return {
     firstName,
     lastName,
-    email: generateEmail(firstName, lastName),
+    email,
     phone: generatePhone(),
     address: `${streetNumber} ${street} ${streetType}`,
     city: randomItem(cities),
@@ -131,16 +162,33 @@ const generateEmployee = () => {
 };
 
 export const seedEmployees = (count = 25) => {
+  // Calculate maximum possible unique combinations
+  const maxCombinations = firstNames.length * lastNames.length;
+  
+  if (count > maxCombinations) {
+    console.warn(`Requested ${count} employees, but only ${maxCombinations} unique name combinations are possible.`);
+    console.warn(`Generating ${maxCombinations} employees instead.`);
+    count = maxCombinations;
+  }
+
+  const usedCombinations = new Set();
+  const existingEmails = new Set();
   const employees = [];
   
   for (let i = 0; i < count; i++) {
-    employees.push(generateEmployee());
+    try {
+      const employee = generateEmployee(usedCombinations, existingEmails);
+      employees.push(employee);
+    } catch (error) {
+      console.error(`Error generating employee ${i + 1}:`, error.message);
+      break;
+    }
   }
 
   try {
     employees.forEach(emp => createEmployee(emp));
-    console.log(`Successfully seeded ${count} employees!`);
-    return { success: true, count };
+    console.log(`Successfully seeded ${employees.length} unique employees!`);
+    return { success: true, count: employees.length };
   } catch (error) {
     console.error('Error seeding employees:', error);
     return { success: false, error: error.message };
